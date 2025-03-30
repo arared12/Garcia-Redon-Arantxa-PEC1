@@ -25,7 +25,8 @@ head(datos)
   
   - En las columnas tenemos los diferentes datos que se recogen de cada paciente. La primera columna se trata de el identificador del paciente, la segunda su condicion de salud que puede ser normal o caquéxico y el resto de las columnas son diferentes metabolitos que se han recogido de cada uno de los pacientes.
   
-**1. Creación de un objeto SummarizedExperiment y estudio de las diferencias con la clase ExpressionSet**
+## 1. Creación de un objeto SummarizedExperiment y estudio de las diferencias con la clase ExpressionSet 
+
 
 Para la creación del objeto SummarizedExperiment (de ahora en adelante, SE), he accedido a la documentación oficial de Bioconductor (https://www.bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html#subsetting). 
 
@@ -70,7 +71,36 @@ Otra diferencia es como se estucturan los datos:
     - `coldata`: un dataframe que contiene los metadatos de las muestras.
     - `rowdata`: un dataframe con los metadatos sobre las filas, como los genes
     - `metadata`: un apartado para metadatos generales del experimento, donde en este caso hemos almacenado la descripción.
-
   - `ExpressionSet` tiene tres componentes principales: 
-    - 
+    - `exprs`: una matriz de datos de expresión con los genes en filas y las muestras en columnas. 
+    - `phenodata`: un objeto que contiene metadatos sobre las muestras, como por ejemplo las condiciones del experimento. 
+    - `featureData`que contiene información sobre los genes del experimento. 
+    
+En general, podemos decir que las diferencias en su estructura hacen que `ExpressionSet`es una estructura de datos más rígida que puede resultar muy útil en experimentos de expresión génica con microarrays, mientras que `SummarizedExperiment`tiene una estructura más flexible que nos permite almacenar más datos y es útil para otros tipos de datos ómicos, no solo de microarrays.
+
+A continuación voy a guardar el objeto SummarizedExperiment en formato binario .Rda como se indica en las instrucciones de la PEC, para ello se usa la función save: 
+```{r file}
+save(se, file = "cachexia_se.Rda")
+
+```
+
+## 2. Análisis exploratorio de los datos del dataset cachexia. 
+
+En primer lugar se va a explorar algunas funciones que se puede hacer con el objeto `se`.
+
+Para poder comparar los datos entre el grupo de caquexia y el grupo control, voy a crear dos matrices distintas con los datos de cada uno de los grupos. 
+
+Después voy a comenzar ocn el análisis exploratorio de alguno de los datos. En primer lugar, utilizo la 
+```{r se}
+matriz_control<-assays(se[,se$Muscle.loss=="control"])$counts
+matriz_cachexia<-assays(se[,se$Muscle.loss=="cachexic"])$counts
+summary(t(matriz_control))
+par(mfrow=c(3,2))
+for(i in 1:3){
+  hist(matriz_control[i,], main=rownames(matriz_control)[i])
+  hist(matriz_cachexia[i,], main=rownames(matriz_cachexia)[i])
+}
+
+```
+
 
