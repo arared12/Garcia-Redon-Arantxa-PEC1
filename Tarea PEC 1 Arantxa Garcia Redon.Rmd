@@ -25,7 +25,7 @@ head(datos)
   
   - En las columnas tenemos los diferentes datos que se recogen de cada paciente. La primera columna se trata de el identificador del paciente, la segunda su condicion de salud que puede ser normal o caquéxico y el resto de las columnas son diferentes metabolitos que se han recogido de cada uno de los pacientes.
   
-**1. Creación de un objeto SummarizedExperiment **
+**1. Creación de un objeto SummarizedExperiment y estudio de las diferencias con la clase ExpressionSet**
 
 Para la creación del objeto SummarizedExperiment (de ahora en adelante, SE), he accedido a la documentación oficial de Bioconductor (https://www.bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html#subsetting). 
 
@@ -50,6 +50,7 @@ se<-SummarizedExperiment(assays=list(counts=datos_num), colData=coldatos, metada
 ```
 
 El objeto SE contiene los siguientes componentes: 
+  
   - `assays = list(counts = datos_num)`: esto contendrá los datos numéricos que hacen referencia a las cantidades de metabolitos de la matriz transpuesta datos_num. 
   
   - `colData = coldatos`:  contiene los metadatos asociados a cada columna (es decir, a las muestras). En este caso, se incluye la información del dataframe coldatos, que contiene:
@@ -58,8 +59,18 @@ El objeto SE contiene los siguientes componentes:
     
   - `metadata = metadatos`: Este aargumento nos permite introducir los metadatos en formato texto que hemos importado del archivo description.
 
-En la PEC nos pide que comparemos dos tipos de
+En la PEC nos pide que comparemos SE con ExpressionSet. Ambas son clases, o estructuras de datos de Bioconductor que son frecuentemente utilizadas para representar y manejar datos experimentales de datos ómicos. Ambas se usan mucho en estudios de expresión génica. 
 
+Para comprender mejor la clase ExpressionSet, de nuevo se ha consultado la página oficial de bioconductor (https://www.bioconductor.org/packages/devel/bioc/vignettes/Biobase/inst/doc/ExpressionSetIntroduction.pdf). La principal diferencia entre los dos paquetes parece ser la flexibilidad en cuanto a los tipos de datos que pueden almacenarse en cada una de las estructuras de datos. Mirando diferentes repositorios en github y stackoverflow se puede ver que ExpressionSet se utiliza para estudios de expresión génica con microarrays de forma casi exclusiva. Sin embargo, SummarizedExperiment es más flexible y permite trabajar con datos de RNAseq y otros datos ómicos. 
 
+Otra diferencia es como se estucturan los datos: 
 
+  - `SummarizedExperiment` se estructura en:
+    - assays: que es una matriz o dataframe con los datoss experimentales (por ejemplo los datos de expresión o de metabolómica como en el dataset que estamos usando)
+    - `coldata`: un dataframe que contiene los metadatos de las muestras.
+    - `rowdata`: un dataframe con los metadatos sobre las filas, como los genes
+    - `metadata`: un apartado para metadatos generales del experimento, donde en este caso hemos almacenado la descripción.
+
+  - `ExpressionSet` tiene tres componentes principales: 
+    - 
 
