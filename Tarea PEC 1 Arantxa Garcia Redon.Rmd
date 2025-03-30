@@ -27,7 +27,12 @@ head(datos)
   
 **1. Creación de un objeto SummarizedExperiment **
 
-Para la creación del objeto SummarizedExperiment (de ahora en adelante, SE), he accedido a la documentación oficial de Bioconductor (https://www.bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html#subsetting). En primer lugar, mirando el apartado de la anatomía de un objeto SE, lo que se puede observar es la necesidad de trasponer los datos daado que en un objeto SE las diferentes muestras(pacientes) están en las columnas y en las filas se deben recoger los features, que en este caso son los metabolitos. Además se admite que se tenga más de un ensayo para unas mismas samples y features y unos metadatos, que se almacenen por separado pero ligados al conjunto de datos principal. 
+Para la creación del objeto SummarizedExperiment (de ahora en adelante, SE), he accedido a la documentación oficial de Bioconductor (https://www.bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html#subsetting). 
+
+![Estrucutra SE]("C:/Users/arant/Downloads/Summarized.Experiment.png")
+
+
+En primer lugar, mirando el apartado de la anatomía de un objeto SE, lo que se puede observar es la necesidad de trasponer los datos daado que en un objeto SE las diferentes muestras(pacientes) están en las columnas y en las filas se deben recoger los features, que en este caso son los metabolitos. Además se admite que se tenga más de un ensayo para unas mismas samples y features y unos metadatos, que se almacenen por separado pero ligados al conjunto de datos principal. 
 
 En el código de a continuación se va a crear el objeto SE tras preprocesar los datos para poder llevar a cabo su creación. 
 
@@ -44,5 +49,17 @@ coldatos<-data.frame(SampleName=datos[,1], Muscle.loss=datos[,2])
 se<-SummarizedExperiment(assays=list(counts=datos_num), colData=coldatos, metadata=metadatos)
 ```
 
-El objeto SE contiene los siguientes componentes. 
+El objeto SE contiene los siguientes componentes: 
+  - `assays = list(counts = datos_num)`: esto contendrá los datos numéricos que hacen referencia a las cantidades de metabolitos de la matriz transpuesta datos_num. 
+  
+  - `colData = coldatos`:  contiene los metadatos asociados a cada columna (es decir, a las muestras). En este caso, se incluye la información del dataframe coldatos, que contiene:
+    - SampleName (nombre de la muestra)
+    - Muscle.loss (información sobre la pérdida muscular)
+    
+  - `metadata = metadatos`: Este aargumento nos permite introducir los metadatos en formato texto que hemos importado del archivo description.
+
+En la PEC nos pide que comparemos dos tipos de
+
+
+
 
