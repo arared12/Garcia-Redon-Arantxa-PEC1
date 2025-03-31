@@ -138,4 +138,7 @@ print(sign_mol)
 
 Se ha obtenido un listado de las moléculas que están diferencialmente presentes en los pacientes normales y con caquexia. 
 
-Ahora, para 
+Ahora, se va a mostrar la matriz de correlación entre los diferentes metabolitos para cada uno de los dos grupos, de manera que podremos ver si algunos de los metabolitos et
+```{r cor}
+correlacio<-cor(assays(se)$counts)
+```
