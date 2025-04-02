@@ -241,11 +241,10 @@ PCAS2 <- prcomp(norm_data)
 pesos<-PCAS2$sdev^2/sum(PCAS2$sdev^2)*100
 par(mfrow=c(1,1))
 plot(PCAS2$x[,1:2], col=as.factor(coldatos$Muscle.loss))
-# Comentado porque no aporta nada, no se observa ningun tipo de cluster
-## y queda poco espacio
-## clust.euclid.average <- hclust(dist(t(norm_data)),method="average")
-##plot(clust.euclid.average, hang=-1, col=as.factor(coldades$Muscle.loss))
+#Se hace tambien un gráfico de clusters
+clust.euclid.average <- hclust(dist(t(norm_data)),method="average")
+plot(clust.euclid.average, hang=-1, col=as.factor(coldatos$Muscle.loss))
 ```
 En el gráfico, no podemos observar ningún tipo de agrupación en el gráfico de PCA. Esto podría deberse a que en realidad no tenemos diferencias muy marcadas entre los datos de los metabolitos en los dos grupos, si que hay algun metabolito donde hay una diferencia notable pero, en general no tenemos diferencias muy marcadas, lo que podría ser la causa de que no veamos agrupamientos en este análisis. 
+ En el análisis de clusteres, no podemos tampoco observar ningún tipo de agrupamiento.
 
-Para finalizar se va a representar un vulcano plot.
